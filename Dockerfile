@@ -1,20 +1,23 @@
+# Imagen base oficial de Keycloak
 FROM quay.io/keycloak/keycloak:26.0.0
 
-# Configuración base de Keycloak
+# 🔹 Configuración base de Keycloak
 ENV KC_DB=postgres
 ENV KC_DB_URL_PARAMETERS=sslmode=require
-ENV KC_HOSTNAME_STRICT=false
 ENV KC_HTTP_ENABLED=true
 ENV KC_PROXY=edge
+ENV KC_HOSTNAME_STRICT=false
+ENV KC_HOSTNAME=late-aliza-planify-e96a6595.koyeb.app
 
-# Usuario administrador quemado (necesario en build y runtime)
+# 🔹 Usuario administrador (solo para bootstrap)
 ENV KC_BOOTSTRAP_ADMIN_USERNAME=admin
 ENV KC_BOOTSTRAP_ADMIN_PASSWORD=admin123
 
-# 🔹 Ejecutamos el build DESPUÉS de definir las variables
+# 🔹 Compila Keycloak con la configuración anterior
 RUN /opt/keycloak/bin/kc.sh build
 
+# 🔹 Expone el puerto HTTP
 EXPOSE 8080
 
-# 🔹 Usa 'start --optimized' (más eficiente y recomendado tras build)
+# 🔹 Comando de inicio (modo optimizado)
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start", "--optimized"]

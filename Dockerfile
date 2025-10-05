@@ -7,14 +7,14 @@ ENV KC_HOSTNAME_STRICT=false
 ENV KC_HTTP_ENABLED=true
 ENV KC_PROXY=edge
 
-# Usuario administrador quemado
+# Usuario administrador quemado (necesario en build y runtime)
 ENV KC_BOOTSTRAP_ADMIN_USERNAME=admin
 ENV KC_BOOTSTRAP_ADMIN_PASSWORD=admin123
 
-# Build del servidor optimizado
+# 🔹 Ejecutamos el build DESPUÉS de definir las variables
 RUN /opt/keycloak/bin/kc.sh build
 
 EXPOSE 8080
 
-# Comando de inicio: las variables reales se pasan desde Koyeb
-ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start"]
+# 🔹 Usa 'start --optimized' (más eficiente y recomendado tras build)
+ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start", "--optimized"]

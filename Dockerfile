@@ -7,6 +7,10 @@ ENV KC_HOSTNAME_STRICT=false
 ENV KC_HTTP_ENABLED=true
 ENV KC_PROXY=edge
 
+# Usuario administrador quemado
+ENV KC_BOOTSTRAP_ADMIN_USERNAME=admin
+ENV KC_BOOTSTRAP_ADMIN_PASSWORD=admin123
+
 # Build del servidor optimizado
 RUN /opt/keycloak/bin/kc.sh build
 
